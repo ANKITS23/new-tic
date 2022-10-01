@@ -13,6 +13,7 @@ export default class App extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
+      record:'',
     };
   }
   
@@ -37,6 +38,7 @@ export default class App extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      record:(!this.state.xIsNext ? 'X' : 'O'),
     });
   }
   
@@ -47,7 +49,7 @@ export default class App extends React.Component {
     
     const moves = history.map((step, move) => {
       const desc = move ?
-        ' step' + move :
+        'Undo' + move :
         'Game start';
       return (
         <li key={move}>
@@ -57,12 +59,14 @@ export default class App extends React.Component {
     });
 
     let status;
+  
     if (winner) {
       status = 'Winner: ' + winner;
     } 
-    else if (winner === null) {
-      status = 'There has been a draw'
-    }
+ 
+    else if(!winner && this.state.history.length === 10){
+      status = 'Draw';
+   }
     else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -77,7 +81,9 @@ export default class App extends React.Component {
         </div>
         <div className="flex gap-2 ">
            <div className='ml-4 text-blue-300 text-4xl  w-[250px] py-2 text-center'>{status}</div>
-           <div className='text-blue-300 text-4xl  w-[250px] py-2 text-center'>Record:{winner}</div>
+           <div className='text-blue-300 text-4xl  w-[250px] py-2 text-center'>Last match winner:{this.state.record}</div>
+           
+           
            </div>
            <div className='ml-7'>
            <ol className='mt-2 text-blue-300 text-4xl  w-[200px] py-2 text-center'>{moves}</ol>   
@@ -88,32 +94,6 @@ export default class App extends React.Component {
   }
 }
 
-
-console.log(
-  
-  calculateWinner(
-    [  "X", null, null,
-       "O",  "X",  "O",
-      null, null,  "X"  ]
-  ),
-
-  calculateWinner(
-    [  "X", null,  "O",
-       "X",  "X",  "O",
-      null, null,  "O"  ]
-  ),
- 
-  calculateWinner(
-    [  "X",  "O",  "O",
-       "O",  "X",  "X",
-       "X",  "X",  "O"  ]
-  ),
-  calculateWinner(
-    [  null, null, null,
-       null, null, null,
-       null, null, null ]
-  )
-);
 
 function calculateWinner(squares) {
     const Lines = [
