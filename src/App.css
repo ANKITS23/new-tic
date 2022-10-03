@@ -1,0 +1,29 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ font-size: 20px;
+ font-weight: bold;
+ margin: 5px 0px;
+}
+
+.wrapper{
+  padding: 0 15px;
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+a{
+  text-decoration: none;
+
+}
